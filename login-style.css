@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.gradient-background {
+  background: linear-gradient(301deg,#0f092d,#10031d,#2f0a57,#220f36,#010104,#252567);
+  background-size: 360% 360%;
+  animation: gradient-animation 24s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  justify-content: center;
+  font-family: Poppins, sans-serif;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+.login-container {
+  text-align: center;
+  color: white;
+}
+
+.login-box {
+  background-color: white;
+  color: black;
+  padding: 40px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  margin-top: -40px;
+}
+
+.login-box h2 {
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+}
+
+button {
+  background-color: #00BFFF;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0099cc;
+}
+
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-text a {
+  color: #00BFFF;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
