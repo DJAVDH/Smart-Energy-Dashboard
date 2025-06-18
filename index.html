@@ -4,64 +4,77 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Energy Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="main-header-wrapper">
-    <div class="sidebar">
-      <div class="logo-section">
+  <!-- Hoofdcontainer voor de pagina-indeling -->
+  <div class="layout-container">
+    <!-- Zijbalk navigatie -->
+    <div class="sidebar-nav">
+      <div class="sidebar-logo-section">
         <h1>ZenEnergy</h1>
-        <img src="images/bolt.png" alt="Logo" class="logo" />
+        <img src="images/bolt.png" alt="Logo" class="sidebar-logo" />
       </div>
-      <nav class="nav-links">
+      <nav class="sidebar-links">
         <a href="index.html">
-          <img src="images/home.png" alt="icon" class="icon" />
+          <img src="images/home.png" alt="icon" class="sidebar-icon" />
           Home Overview
         </a>
         <a href="car.html">
-          <img src="images/car.png" alt="icon" class="icon" />
+          <img src="images/car.png" alt="icon" class="sidebar-icon" />
           Car Overview
         </a>
         <a href="#">
-          <img src="images/settings.png" alt="icon" class="icon" />
+          <img src="images/settings.png" alt="icon" class="sidebar-icon" />
           Settings
         </a>
         <a href="filter.html">
-          <img src="images/filter.png" alt="icon" class="icon" />
+          <img src="images/filter.png" alt="icon" class="sidebar-icon" />
           Filter
         </a>
       </nav>
     </div>
-    <div class="main-content">
-      <div class="energy-dashboard-row">
-        <span class="energy-dashboard-label">
+
+    <!-- Hoofdcontent rechts van de zijbalk -->
+    <div class="main-panel">
+      <!-- Titelbalk met dashboard titel en knoppen -->
+      <div class="dashboard-header-row">
+        <span class="dashboard-title-label">
           Energy dashboard
         </span>
-        <span class="energy-dashboard-logos">
-          <img src="images/profile.png" alt="Logo 1" class="logo-placeholder" />
-          <img src="images/settings.png" alt="Logo 2" class="logo-placeholder" />
+        <span class="dashboard-header-icons">
+          <a href="login.html">
+            <img src="images/profile.png" alt="Profiel" class="dashboard-header-icon" />
+          </a>
+          <a href="settings.html">
+            <img src="images/settings.png" alt="Instellingen" class="dashboard-header-icon" />
+          </a>
         </span>
       </div>
-      <div class="period-bar-row">
-        <div class="dashboard-period-bar">
-          <button class="period-btn period-left active">Today</button>
-          <button class="period-btn period-center">Month</button>
-          <button class="period-btn period-right">Year</button>
+
+      <!-- Rij met periodebalk en overzichtsinfo -->
+      <div class="period-info-row">
+        <!-- Periodebalk met knoppen -->
+        <div class="period-selector-bar">
+          <button class="period-btn period-btn-today active">Today</button>
+          <button class="period-btn period-btn-month">Month</button>
+          <button class="period-btn period-btn-year">Year</button>
         </div>
-        <div class="period-bar-right">
-          <span class="period-home-overview">Home Overview</span>
-          <span class="period-date" id="period-date"></span>
+        <!-- Overzicht en datum -->
+        <div class="overview-info">
+          <span class="overview-title">Home Overview</span>
+          <span class="overview-date" id="overview-date"></span>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Simple JS to toggle active state
+    // Zet de actieve periodeknop
     document.querySelectorAll('.period-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
@@ -69,8 +82,8 @@
       });
     });
 
-    // Set the date
-    const dateSpan = document.getElementById('period-date');
+    // Zet de huidige datum in het overzicht
+    const dateSpan = document.getElementById('overview-date');
     if (dateSpan) {
       const now = new Date();
       dateSpan.textContent = now.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
