@@ -2,8 +2,25 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow-x: hidden;
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom right, #0F092D, #10031D);
+}
+
+.main-header-wrapper {
+  display: flex;
+  align-items: flex-start;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 0;
 }
 
 .sidebar {
@@ -19,6 +36,7 @@ body, html {
   margin-top: 15px;
   margin-bottom: 15px;
   margin-left: 15px;
+  flex-shrink: 0;
 }
 
 .logo-section {
@@ -79,12 +97,122 @@ body, html {
 
 .header-logos {
   display: flex;
-  gap: 20px;
+  gap: 40px;
 }
 
 .logo-placeholder {
-  width: 60px;
-  height: 60px;
-  background-color: #444;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
+  display: inline-block;
+}
+
+.energy-dashboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 50px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+.energy-dashboard-label {
+  position: relative;
+  margin-left: 0;
+  margin-top: 0;
+  color: white;
+  font-size: 2.2em;
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  flex-shrink: 1;
+  max-width: calc(100vw - 350px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+}
+
+.energy-dashboard-logos {
+  display: flex;
+  gap: 70px;
+  margin-right: 100px;
+  margin-left: 30px;
+
+}
+
+.period-bar-row {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  gap: 40px;
+}
+
+.dashboard-period-bar {
+  background: rgba(238, 238, 238, 0.4);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 38px;
+  font-family: Poppins, sans-serif;
+  font-size: 1.18em;
+  font-weight: 500;
+  color: #EEEEEE;
+  box-sizing: border-box;
+  max-width: 350px;
+  min-width: 220px;
+  margin: 0;
+}
+
+.period-btn {
+  background: transparent;
+  border: none;
+  color: #222;
+  font-family: Poppins, sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+
+.period-btn.active {
+  background: #272F57;
+  color: #fff;
+  border-radius: 16px;
+}
+
+.period-center {
+  text-align: center;
+  flex: 1;
+}
+
+.period-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.period-home-overview {
+  color: #EEEEEE;
+  font-weight: 600;
+  font-size: 1em;
+  letter-spacing: 0.5px;
+}
+
+.period-date {
+  color: #EEEEEE;
+  font-size: 0.98em;
+  opacity: 0.8;
 }

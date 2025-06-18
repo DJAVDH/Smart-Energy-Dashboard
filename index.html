@@ -36,6 +36,45 @@
         </a>
       </nav>
     </div>
+    <div class="main-content">
+      <div class="energy-dashboard-row">
+        <span class="energy-dashboard-label">
+          Energy dashboard
+        </span>
+        <span class="energy-dashboard-logos">
+          <img src="images/profile.png" alt="Logo 1" class="logo-placeholder" />
+          <img src="images/settings.png" alt="Logo 2" class="logo-placeholder" />
+        </span>
+      </div>
+      <div class="period-bar-row">
+        <div class="dashboard-period-bar">
+          <button class="period-btn period-left active">Today</button>
+          <button class="period-btn period-center">Month</button>
+          <button class="period-btn period-right">Year</button>
+        </div>
+        <div class="period-bar-right">
+          <span class="period-home-overview">Home Overview</span>
+          <span class="period-date" id="period-date"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    // Simple JS to toggle active state
+    document.querySelectorAll('.period-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Set the date
+    const dateSpan = document.getElementById('period-date');
+    if (dateSpan) {
+      const now = new Date();
+      dateSpan.textContent = now.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  </script>
 </body>
 </html>
