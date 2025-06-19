@@ -4,7 +4,7 @@ let accuChartInstance = null;
 async function createAccuChart() {
     // try voor als er error is
     try {
-        const response = await fetch('energy_data/js/get_home_data.php'); // haal de data op van de PHP file
+        const response = await fetch("get_home_data.php"); // haal de data op van de PHP file
         if (!response.ok) { // als de response niet ok is dan komt er een error
             throw new Error('Network response was not ok');
         }
