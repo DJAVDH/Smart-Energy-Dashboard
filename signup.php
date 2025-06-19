@@ -11,7 +11,7 @@
   <div class="login-container">
        <div class="logo-section">
         <h1>ZenEnergy</h1>
-        <img src="images/bolt.png" alt="Logo" class="logo" />
+        <img src="static/images/bolt.png" alt="Logo" class="logo" />
       </div>
      <div class="login-box">
          <h2>Sign up</h2>
@@ -25,7 +25,7 @@
         <button type="submit">Sign up</button>
 </form>
       <p class="signup-text">
-        Already have an account? <a href="login.html">Log in</a>
+        Already have an account? <a href="login.php">Log in</a>
       </p>
     </div>
   </div>

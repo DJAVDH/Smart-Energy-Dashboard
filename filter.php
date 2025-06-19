@@ -16,23 +16,23 @@
   <div class="sidebar">
     <div class="logo-section">
       <h1>ZenEnergy</h1> 
-      <img src="images/bolt.png" alt="Logo" class="logo" />
+      <img src="static/images/bolt.png" alt="Logo" class="logo" />
     </div>
     <nav class="nav-links">
-      <a href="index.html">
-        <img src="images/home.png" alt="icon" class="icon" />
+      <a href="index.php">
+        <img src="static/images/home.png" alt="icon" class="icon" />
         Home Overview
       </a>
-      <a href="car.html">
-        <img src="images/car.png" alt="icon" class="icon" />
+      <a href="car.php">
+        <img src="static/images/car.png" alt="icon" class="icon" />
         Car Overview
       </a>
-      <a href="#">
-        <img src="images/settings.png" alt="icon" class="icon" />
+      <a href="settings.php">
+        <img src="static/images/settings.png" alt="icon" class="icon" />
         Options
       </a>
-      <a href="filter.html">
-        <img src="images/filter.png" alt="icon" class="icon" />
+      <a href="filter.php">
+        <img src="static/images/filter.png" alt="icon" class="icon" />
         Filter
       </a>
     </nav>
@@ -40,8 +40,8 @@
 
   <main class="main-content">
       <header class="header">
-        <img src="images/user-icon.png" alt="User" class="header-icon">
-        <img src="images/settings-gear.png" alt="Settings" class="header-icon">
+        <img src="static/images/user-icon.png" alt="User" class="header-icon">
+        <img src="static/images/settings-gear.png" alt="Settings" class="header-icon">
       </header>
 
       <div class="filter-section">

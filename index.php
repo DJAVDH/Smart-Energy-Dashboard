@@ -17,23 +17,23 @@
     <div class="sidebar-nav">
       <div class="sidebar-logo-section">
         <h1>ZenEnergy</h1>
-        <img src="images/bolt.png" alt="Logo" class="sidebar-logo" />
+        <img src="static/images/bolt.png" alt="Logo" class="sidebar-logo" />
       </div>
       <nav class="sidebar-links">
-        <a href="index.html">
-          <img src="images/home.png" alt="icon" class="sidebar-icon" />
+        <a href="index.php">
+          <img src="static/images/home.png" alt="icon" class="sidebar-icon" />
           Home Overview
         </a>
-        <a href="car.html">
-          <img src="images/car.png" alt="icon" class="sidebar-icon" />
+        <a href="car.php">
+          <img src="static/images/car.png" alt="icon" class="sidebar-icon" />
           Car Overview
         </a>
         <a href="#">
-          <img src="images/settings.png" alt="icon" class="sidebar-icon" />
+          <img src="static/images/settings.png" alt="icon" class="sidebar-icon" />
           Settings
         </a>
-        <a href="filter.html">
-          <img src="images/filter.png" alt="icon" class="sidebar-icon" />
+        <a href="filter.php">
+          <img src="static/images/filter.png" alt="icon" class="sidebar-icon" />
           Filter
         </a>
       </nav>
@@ -47,11 +47,11 @@
           Energy dashboard
         </span>
         <span class="dashboard-header-icons">
-          <a href="login.html">
-            <img src="images/profile.png" alt="Profiel" class="dashboard-header-icon" />
+          <a href="login.php">
+            <img src="static/images/profile.png" alt="Profiel" class="dashboard-header-icon" />
           </a>
-          <a href="settings.html">
-            <img src="images/settings.png" alt="Instellingen" class="dashboard-header-icon" />
+          <a href="settings.php">
+            <img src="static/images/settings.png" alt="Instellingen" class="dashboard-header-icon" />
           </a>
         </span>
       </div>
@@ -93,6 +93,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="charts.js"></script>
-  <script src="toggle.js"></script>
+  <script src="js/toggle.js"></script>
 </body>
 </html>

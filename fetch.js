@@ -1,4 +1,4 @@
-fetch('/energy/database/get_auto.php')
+fetch('database/get_auto.php') // Fetch data from the PHP file
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
