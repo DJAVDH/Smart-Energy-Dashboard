@@ -1,0 +1,43 @@
+STAP 1: DATABASE AANMAKEN
+
+maak een database aan op localhost/myphpadmin
+
+noem de database: "energy"
+
+ga naar de sql tablad, je ziet daar een witte grote balk voor text. copy paste dit en click go:
+
+CREATE TABLE energy_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    zonnepaneelspanning FLOAT,
+    zonnepaneelstroom FLOAT,
+    waterstofproductie FLOAT,
+    stroomverbruik_woning FLOAT,
+    waterstofverbruik_auto FLOAT,
+    buitentemperatuur FLOAT,
+    binnentemperatuur FLOAT,
+    luchtdruk FLOAT,
+    luchtvochtigheid FLOAT,
+    accuniveau FLOAT,
+    co2_concentratie_binnen FLOAT,
+    waterstofopslag_woning FLOAT,
+    waterstofopslag_auto FLOAT,
+    date VARCHAR(10),
+    time VARCHAR(8)
+);
+
+als je dan terug naar het overzicht gaat zie je de tabellen met alle namen staan.
+
+
+
+STAP 2: VALUES IMPORTEREN
+
+
+plaats de 2 andere files in deze folder in je htdocs mapje en zorg ervoor dat xampp runt.
+
+run de php file door op localhost/import_json.php te doen
+
+refresh je database en check of je nu values hebt staan in de database.
+
+
+
+
