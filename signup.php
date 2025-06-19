@@ -17,10 +17,10 @@
          <h2>Sign up</h2>
       <form method="POST" action="database/signup.php">
         <label>Username</label>
-        <input type="text" name="username" placeholder="Type your username" required>
+        <input type="text" name="username" placeholder="Type a username" required>
 
         <label>Password</label>
-        <input type="password" name="password" placeholder="Type your password" required>
+        <input type="password" name="password" placeholder="Type a password" required>
 
         <button type="submit">Sign up</button>
 </form>
