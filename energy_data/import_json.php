@@ -6,12 +6,14 @@ $pass = ''; // Change if your MySQL password is set
 $db = 'energy';
 
 $conn = new mysqli($host, $user, $pass, $db);
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // Read JSON file
 $jsonData = json_decode(file_get_contents('energy_data.json'), true);
+
 if ($jsonData === null) {
     die("Error reading JSON: " . json_last_error_msg());
 }
@@ -35,7 +37,7 @@ if ($stmt === false) {
 // Loop through JSON data
 foreach ($jsonData as $row) {
     // Ensure all fields exist, default to NULL if missing
-    $zonnepaneelspanning = isset($row['zonnepaneelspanning']) ? floatval($row['zonnepaneelspanning']) : null;
+    $zonnepaneelspanning = isset($row['zonnepaneelspanning']) ? floatval($row['zonnepaneelspanning']) : null; // is the value present in data? if yes, convert to float, if no, set to null
     $zonnepaneelstroom = isset($row['zonnepaneelstroom']) ? floatval($row['zonnepaneelstroom']) : null;
     $waterstofproductie = isset($row['waterstofproductie']) ? floatval($row['waterstofproductie']) : null;
     $stroomverbruik_woning = isset($row['stroomverbruik_woning']) ? floatval($row['stroomverbruik_woning']) : null;
@@ -53,7 +55,7 @@ foreach ($jsonData as $row) {
 
     // Bind parameters
     $stmt->bind_param(
-        'ddddddddddddsss',
+        'ddddddddddddsss', // double for float values, s for string values. 
         $zonnepaneelspanning,
         $zonnepaneelstroom,
         $waterstofproductie,
