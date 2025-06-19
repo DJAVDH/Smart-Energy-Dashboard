@@ -1,0 +1,233 @@
+/* Algemene body en achtergrond */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #0F092D, #10031D);
+}
+
+/* Hoofdcontainer voor layout */
+.layout-container {
+  display: flex;
+  align-items: flex-start;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Zijbalk navigatie */
+.sidebar-nav {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  width: 290px;
+  background-color: #272F57;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+/* Logo sectie in de zijbalk */
+.sidebar-logo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  justify-content: center;
+  font-family: Poppins, sans-serif;
+}
+
+.sidebar-logo {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+/* Navigatielinks in de zijbalk */
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-links a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+  font-size: 20px;
+  font-family: Roboto, sans-serif;
+}
+
+.sidebar-links a:hover {
+  opacity: 0.8;
+}
+
+.sidebar-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+
+/* Hoofdcontent rechts van de zijbalk */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 0;
+}
+
+/* Rij met dashboard titel en iconen */
+.dashboard-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 50px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+/* Dashboard titel */
+.dashboard-title-label {
+  position: relative;
+  margin-left: 0;
+  margin-top: 0;
+  color: white;
+  font-size: 2.2em;
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  flex-shrink: 1;
+  max-width: calc(100vw - 350px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+}
+
+/* Iconen rechts van de dashboard titel */
+.dashboard-header-icons {
+  display: flex;
+  gap: 70px;
+  margin-right: 100px;
+  margin-left: 30px;
+}
+
+.dashboard-header-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Rij met periodebalk en overzicht */
+.period-info-row {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  gap: 40px;
+}
+
+/* Periodebalk met knoppen */
+.period-selector-bar {
+  background: rgba(238, 238, 238, 0.4);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 38px;
+  font-family: Poppins, sans-serif;
+  font-size: 1.18em;
+  font-weight: 500;
+  color: #EEEEEE;
+  box-sizing: border-box;
+  max-width: 350px;
+  min-width: 220px;
+  margin: 0;
+}
+
+/* Periodeknoppen */
+.period-btn {
+  background: transparent;
+  border: none;
+  color: #222;
+  font-family: Poppins, sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+
+.period-btn.active {
+  background: #272F57;
+  color: #fff;
+  border-radius: 16px;
+}
+
+/* Overzichtsinfo rechts van de periodebalk */
+.overview-info {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.overview-title {
+  color: #EEEEEE;
+  font-weight: 600;
+  font-size: 1.5em;
+  letter-spacing: 0.5px;
+}
+
+.overview-date {
+  color: #EEEEEE;
+  font-size: 1.5em;
+  color: #EEEEEE;
+  font-weight: 600;
+  font-size: 1.5em;
+  letter-spacing: 0.5px;
+}
+
+.period-date {
+  color: #EEEEEE;
+  font-size: 1.5em;
+
+}
+
+/* Battery graph panel container for the chart */
+.battery-graph-panel {
+  background: rgba(39, 47, 87, 0.85);
+  border-radius: 32px;
+  box-shadow: 0 4px 24px rgba(16, 3, 29, 0.18);
+  padding: 32px 24px;
+  margin: 0 auto 40px auto;
+  width: 420px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.battery-graph-panel canvas {
+  width: 340px !important;
+  height: 220px !important;
+  background: transparent;
+}

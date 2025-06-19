@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Energy Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="static/css/car.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -44,7 +45,7 @@
       <!-- Titelbalk met dashboard titel en knoppen -->
       <div class="dashboard-header-row">
         <span class="dashboard-title-label">
-          Energy dashboard
+          Energy Dashboard
         </span>
         <span class="dashboard-header-icons">
           <a href="login.html">
@@ -66,28 +67,19 @@
         </div>
         <!-- Overzicht en datum -->
         <div class="overview-info">
-          <span class="overview-title">Car Overview</span>
-          <span class="overview-date" id="overview-date"></span>
+          <span class="overview-title">Battery Overview</span>
+          <span class="overview-date" id="overview-date">2025-06-14</span>
         </div>
+      </div>
+
+      <!-- Chart container -->
+      <div class="battery-graph-panel">
+        <canvas id="accuniveauChart"></canvas>
       </div>
     </div>
   </div>
 
-  <script>
-    // Zet de actieve periodeknop
-    document.querySelectorAll('.period-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    // Zet de huidige datum in het overzicht
-    const dateSpan = document.getElementById('overview-date');
-    if (dateSpan) {
-      const now = new Date();
-      dateSpan.textContent = now.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-    }
-  </script>
+  <script src="fetch.js"></script>
+  <script src="toggle.js"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@ df.columns = [
 ]
 
 # Replace commas with periods and convert to numeric
-for col in df.columns[1:]:  # Skip tijdstip cause it's datetime which is messy
+for col in df.columns[1:]:  # Skip tijdstip cause it's datetime
     df[col] = df[col].astype(str).str.replace(',', '.') # Replace commas with periods
     df[col] = pd.to_numeric(df[col], errors='coerce') # Convert to numeric, change errors to NaN
 
