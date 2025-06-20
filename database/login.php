@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Assuming passwords are hashed
         if (password_verify($password, $row["password"])) {
             $_SESSION["user_id"] = $row["id"];
-            header("Location: ../index.html"); // or wherever you wanna go
+            header("Location: ../index.php"); // or wherever you wanna go
             exit;
         } else {
             echo "Wrong password ya goof.";

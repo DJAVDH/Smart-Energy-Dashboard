@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->execute()) {
         // Optional: Log the user in immediately
         $_SESSION["user_id"] = $stmt->insert_id;
-        header("Location: ../login.html"); // Redirect after signup
+        header("Location: ../login.php"); // Redirect after signup
         exit;
     } else {
         die("Failed to create user. Database puked.");
