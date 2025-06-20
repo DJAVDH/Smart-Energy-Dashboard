@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data
     console.log(`Luchtvochtigheid: ${data.luchtvochtigheid}%`);
     console.log(`CO2 binnen: ${data.co2_concentratie_binnen} ppm`);
     console.log(`Waterstofopslag woning: ${data.waterstofopslag_woning}%`);
+    console.log(`Buitentemperatuur: ${data.buitentemperatuur}°C`);
+    console.log(`Waterstofverbruik_auto: ${data.waterstofverbruik_auto}%`);
+    console.log(`Waterstofopslag_auto: ${data.waterstofopslag_auto}%`);
+
 
 // als data een error heeft, log de error
   if (data.error) {
@@ -72,6 +76,44 @@ document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data
 
   // CO2-concentratie binnen (bargrafiek)
   createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', data.co2_concentratie_binnen, data.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A');
+
+    // Buitentemperatuur (lijngrafiek)
+    createSingleValueChart('buitentemperatuurChart', 'Buitentemperatuur (°C)', data.buitentemperatuur, '#FF9800');
+
+    // Waterstofverbruik auto (bar grafiek)
+    createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', data.waterstofverbruik_auto, data.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A');
+
+    // Waterstofopslag auto (gauge grafiek)
+    new Chart(document.getElementById('waterstofopslagAutoChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['H₂ opgeslagen', 'Leeg'],
+            datasets: [{
+                data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
+                backgroundColor: ['#009688', '#E0E0E0'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Waterstofopslag auto',
+                    font: { size: 20 },
+                    color: '#ffffff'
+                }
+            }
+        }
+    });
+    
+
+    
 
   // gauge grafiek voor waterstofopslag
   new Chart(document.getElementById('waterstofopslagChart'), {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Energy Dashboard</title>
-  <link rel="stylesheet" href="static/css/car.css" />
+  <link rel="stylesheet" href="static/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -67,19 +67,28 @@
         </div>
         <!-- Overzicht en datum -->
         <div class="overview-info">
-          <span class="overview-title">Battery Overview</span>
+          <span class="overview-title">Car overview</span>
           <span class="overview-date" id="overview-date">2025-06-14</span>
         </div>
       </div>
 
-      <!-- Chart container -->
-      <div class="battery-graph-panel">
-        <canvas id="accuniveauChart"></canvas>
-      </div>
-    </div>
-  </div>
+      <!-- Grafieken voor home -->
+      <section class="home-panel">
+        <div class="chart-container">
+          <div class="canvas-wrapper">
+          <canvas id="accuGaugeChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-container">
+          <div class="canvas-wrapper">
+            <canvas id="waterstofopslagAutoChart"></canvas>
+          </div>
+        </div>
+      </section>
 
-  <script src="fetch.js"></script>
+      
+
   <script src="js/toggle.js"></script>
+  <script src="charts.js"></script>
 </body>
 </html>
