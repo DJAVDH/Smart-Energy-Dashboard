@@ -1,8 +1,8 @@
 // document haalt data van get_home_data.php, logt de data in de consoles en maakt grafieken op basis van de data
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const response = await fetch('get_home_data.php');
-  const data = await response.json();
+document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data is geladen
+  const response = await fetch('get_home_data.php'); // wacht op response van de server
+  const data = await response.json(); 
 
   // laat data zien in console voor duidelijkheid
     console.log(`Tijd: ${data.date} ${data.time}`);
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ----- GRAFIEKEN -----
-  // Accuniveau (gauge- grafiek)
+  // gauge grafiek voor accuniveau
   new Chart(document.getElementById('accuGaugeChart'), {
       type: 'doughnut',
       data: {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // CO2-concentratie binnen (bargrafiek)
   createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', data.co2_concentratie_binnen, data.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A');
 
-  // Waterstofopslag (gauge grafiek)
+  // gauge grafiek voor waterstofopslag
   new Chart(document.getElementById('waterstofopslagChart'), {
       type: 'doughnut',
       data: {
@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: '60%',
-          rotation: -90,
-          circumference: 180,
+          cutout: '60%', // hoeveel ruimte tussen de donut
+          rotation: -90, // welke kant de donut begint
+          circumference: 180, // hoe groot de donut, 360 is een hele cirkel
           plugins: {
               legend: { display: false },
               title: {
@@ -102,8 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
   });
 
-  // ------ Functies voor grafieken --------
-
+  // ------ Functies voor lijn-grafieken --------
   function createSingleValueChart(id, label, value, color) {
       new Chart(document.getElementById(id), {
           type: 'line', // type is lijngrafiek
@@ -132,12 +131,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
   }
 
+    // ------ Functie voor bar-grafieken --------
   function createBarChart(id, label, value, color) {
       new Chart(document.getElementById(id), {
           type: 'bar',
           data: {
-              labels: [label],
-              datasets: [{
+              labels: [label], // de label voor de x-as
+              datasets: [{ // label, data en achtergrondkleur
                   label: label,
                   data: [value],
                   backgroundColor: color
