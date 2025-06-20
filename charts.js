@@ -1,102 +1,155 @@
-let accuChartInstance = null;
-// chartjs plugin
+// document haalt data van get_home_data.php, logt de data in de consoles en maakt grafieken op basis van de data
 
-async function createAccuChart() {
-    // try voor als er error is
-    try {
-        const response = await fetch("get_home_data.php"); // haal de data op van de PHP file
-        if (!response.ok) { // als de response niet ok is dan komt er een error
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json(); // data wacht op response en zet die om naar json
+document.addEventListener('DOMContentLoaded', async () => {
+  const response = await fetch('get_home_data.php');
+  const data = await response.json();
 
-        // als er error is komt er een foutmelding
-        if (data.error){
-            console.error('Fout in PHP-script: ', data.error);
-            document.getElementById('accuGaugeChart').outerHTML = '<p style="color: red; text-align: center;">Kon accudata niet laden: ' + data.error + '</p>';
-            return;
-        }
+  // laat data zien in console voor duidelijkheid
+    console.log(`Tijd: ${data.date} ${data.time}`);
+    console.log(`Accuniveau: ${data.accuniveau}%`);
+    console.log(`Zonnepaneelspanning: ${data.zonnepaneelspanning} V`);
+    console.log(`Zonnepaneelstroom: ${data.zonnepaneelstroom} A`);
+    console.log(`Waterstofproductie: ${data.waterstofproductie} L/u`);
+    console.log(`Stroomverbruik woning: ${data.stroomverbruik_woning} kW`);
+    console.log(`Luchtdruk: ${data.luchtdruk} hPa`);
+    console.log(`Luchtvochtigheid: ${data.luchtvochtigheid}%`);
+    console.log(`CO2 binnen: ${data.co2_concentratie_binnen} ppm`);
+    console.log(`Waterstofopslag woning: ${data.waterstofopslag_woning}%`);
 
-        const accuniveau = data.accuniveau; // haal het accuniveau uit de data
+// als data een error heeft, log de error
+  if (data.error) {
+      console.error("Fout:", data.error);
+      return;
+  }
 
-        if (accuniveau === null || accuniveau === undefined) { // als accuniveau niet bestaat of null is
-            console.warn("Geen geldig accuniveau gevonden in de data:", data);
-            document.getElementById('accuGaugeChart').outerHTML = '<p style="color: red; text-align: center;">Geen accudata beschikbaar.</p>';
-            return;
-        }
-        console.log("Accuniveau gekregen: ", accuniveau); // laat accu zien in console
+  // ----- GRAFIEKEN -----
+  // Accuniveau (gauge- grafiek)
+  new Chart(document.getElementById('accuGaugeChart'), {
+      type: 'doughnut',
+      data: {
+          labels: ['Huidig niveau', 'Leeg'],
+          datasets: [{
+              data: [data.accuniveau, 100 - data.accuniveau],
+              backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
+              borderWidth: 0
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          rotation: -90,
+          circumference: 180,
+          plugins: {
+              legend: { display: false },
+              title: {
+                  display: true,
+                  text: 'Accuniveau',
+                  font: { size: 20 },
+                  color: '#ffffff'
+              }
+          }
+      }
+  });
 
-        //data voorbereiden voor gauge chart
-        const percentageVol = accuniveau;
-        const percentageLeeg = 100 - accuniveau;
+  // Zonnepaneelspanning (lijngrafiek)
+  createSingleValueChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', data.zonnepaneelspanning, '#2196F3');
 
-        const ctx = document.getElementById('accuGaugeChart').getContext('2d');
+  // Zonnepaneelstroom (lijngrafiek)
+  createSingleValueChart('zonnepaneelStroomChart', 'Zonnepaneelstroom (A)', data.zonnepaneelstroom, '#4CAF50');
 
-        // als er al een chart is, vernietig deze
-        if (accuChartInstance) {
-            accuChartInstance.destroy();
-        }
+  // Waterstofproductie (bar grafiek)
+  createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', data.waterstofproductie, '#00BCD4');
 
-        // maak de gauge chart aan
-        accuChartInstance = new Chart(ctx, { 
-            type : 'doughnut',
-            data : {
-                labels: ['Huidig niveau', 'resterend'],
-                datasets: [{
-                    data: [percentageVol, percentageLeeg],
-                    backgroundColor: [
-                        percentageVol > 20 ? '#4CAF50' : '#FF6347',
-                        '#E0E0E0'
-                    ],
-                    borderWidth: 0,
-                    borderColor: 'transparent'
-                }]
-            },
-            options :{
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '60%',
-                rotation: -90,
-                circumference: 180, // helft van de cirkel
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: false },
-                    title: {
-                      display: true,
-                      text: 'Accuniveau',
-                      font: {
-                        size: 35,
-                        weight: 'bold'
-                      },
-                      color: '#ffffff'
-                    },
-                    doughnutlabel: {
-                      labels: [
-                        {
-                          text: percentageVol.toFixed(0) + '%',
-                          font: {
-                            size: 50,
-                            weight: 'bold'
-                          },
-                          color: '#333'
-                        },
-                        {
-                          text: 'Accu Niveau',
-                          font: {
-                            size: 20
-                          },
-                          color: '#666'
-                        }
-                      ]
-                    }
-                  }
-            }
-        });
+  // Stroomverbruik woning (lijngrafiek)
+  createSingleValueChart('stroomverbruikWoningChart', 'Stroomverbruik woning (kW)', data.stroomverbruik_woning, '#FFC107');
 
-    } // als try niet lukt en hij vangt een error, laat hij een foutmelding zien
-    catch (error){
-        console.error("Fout bij het laden of tekenen van de accugrafiek:", error);
-        document.getElementById('accuGaugeChart').outerHTML = '<p style="color: red; text-align: center;">Kon de accudata niet laden. Controleer de console (F12) voor details.</p>';
-    }
-}
-document.addEventListener('DOMContentLoaded', createAccuChart);
+  // Luchtdruk (lijngrafiek)
+  createSingleValueChart('luchtdrukChart', 'Luchtdruk (hPa)', data.luchtdruk, '#9C27B0');
+
+  // Luchtvochtigheid (lijngrafiek)
+  createSingleValueChart('luchtvochtigheidChart', 'Luchtvochtigheid (%)', data.luchtvochtigheid, '#03A9F4');
+
+  // CO2-concentratie binnen (bargrafiek)
+  createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', data.co2_concentratie_binnen, data.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A');
+
+  // Waterstofopslag (gauge grafiek)
+  new Chart(document.getElementById('waterstofopslagChart'), {
+      type: 'doughnut',
+      data: {
+          labels: ['H₂ opgeslagen', 'Leeg'],
+          datasets: [{
+              data: [data.waterstofopslag_woning, 100 - data.waterstofopslag_woning],
+              backgroundColor: ['#009688', '#E0E0E0'],
+              borderWidth: 0
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          rotation: -90,
+          circumference: 180,
+          plugins: {
+              legend: { display: false },
+              title: {
+                  display: true,
+                  text: 'Waterstofopslag woning',
+                  font: { size: 20 },
+                  color: '#ffffff'
+              }
+          }
+      }
+  });
+
+  // ------ Functies voor grafieken --------
+
+  function createSingleValueChart(id, label, value, color) {
+      new Chart(document.getElementById(id), {
+          type: 'line', // type is lijngrafiek
+          data: {
+              labels: ['Nu'], // allen de nu waarde voor nu. moet nog veranderd worden..
+              datasets: [{
+                  label: label, //beschrijving
+                  data: [value], // de waarde
+                  borderColor: color, //kleur van de lijn
+                  borderWidth: 2, // dikte van de lijn
+                  fill: false, // niet onder de lijn vullen
+                  tension: 0.3 // hoe smooth de lijn is
+              }]
+          },
+          options: { // 
+              responsive: true, // canvas past zich aan aan schermhoogte/breedte
+              maintainAspectRatio: false, 
+              plugins: {
+                  legend: { display: false },
+                    
+              },
+              scales: {
+                  y: { beginAtZero: true }
+              }
+          }
+      });
+  }
+
+  function createBarChart(id, label, value, color) {
+      new Chart(document.getElementById(id), {
+          type: 'bar',
+          data: {
+              labels: [label],
+              datasets: [{
+                  label: label,
+                  data: [value],
+                  backgroundColor: color
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  y: { beginAtZero: true }
+              }
+          }
+      });
+  }
+});

@@ -44,4 +44,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     die("You can only POST to this endpoint. Stop hacking.");
 }
-?>
