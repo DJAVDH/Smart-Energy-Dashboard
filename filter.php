@@ -40,8 +40,8 @@
 
   <main class="main-content">
       <header class="header">
-        <img src="static/images/profile.png" alt="User" class="header-icon">
-        <img src="static/images/settings.png" alt="Settings" class="header-icon">
+        <img src="static/images/profile.png" alt="User" class="dashboard-header-icon">
+        <img src="static/images/settings.png" alt="Settings" class="dashboard-header-icon">
       </header>
 
       <div class="filter-section">
