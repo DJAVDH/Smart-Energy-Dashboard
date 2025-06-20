@@ -29,7 +29,7 @@
       </a>
       <a href="settings.php">
         <img src="static/images/settings.png" alt="icon" class="icon" />
-        Options
+        Settings
       </a>
       <a href="filter.php">
         <img src="static/images/filter.png" alt="icon" class="icon" />
