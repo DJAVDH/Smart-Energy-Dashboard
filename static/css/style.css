@@ -12,7 +12,7 @@ body, html {
 .layout-container {
   display: flex;
   align-items: flex-start;
-  height: 100vh;
+  height: 155vh;
   min-height: 100vh;
   width: 100%;
   box-sizing: border-box;
@@ -22,7 +22,7 @@ body, html {
 .sidebar-nav {
   position: relative;
   z-index: 1;
-  height: 100vh;
+  height: 100%;
   width: 290px;
   background-color: #272F57;
   color: white;
@@ -83,6 +83,7 @@ body, html {
   flex-direction: column;
   flex: 1;
   margin-top: 0;
+  height: 100%;
 }
 
 /* Rij met dashboard titel en iconen */
@@ -216,6 +217,10 @@ body, html {
 
 .home-panel{
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
 }
 
 .chart-container {
@@ -232,7 +237,6 @@ body, html {
   justify-content: center;
   position: relative; /* Belangrijk voor positionering van de canvas binnenin */
   overflow: hidden; /* Zorgt ervoor dat niets buiten de container komt */
-  margin-left: 20px;
 }
 
 #accuGaugeChart{
