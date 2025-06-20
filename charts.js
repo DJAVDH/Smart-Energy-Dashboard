@@ -1,3 +1,5 @@
+// document haalt data van get_home_data.php, logt de data in de consoles en maakt grafieken op basis van de data
+
 document.addEventListener('DOMContentLoaded', async () => {
   const response = await fetch('get_home_data.php');
   const data = await response.json();
