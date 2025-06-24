@@ -24,8 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const latestData = data[data.length - 1]; // alleen data voor gauges
 
-    // Helper function for single-value line chart
-
+    // functie voor lijngrafiek
     function createLineChart(id, label, labels, dataPoints, color) {
         const canvas = document.getElementById(id);
         if (!canvas) return;
@@ -51,9 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
         });
       }
-      
 
-    // Helper function for bar charts
+    // functie voor bar grafiek
     function createBarChart(id, label, labels, dataPoints, color) {
         const canvas = document.getElementById(id);
         if (!canvas) return;
@@ -77,9 +75,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
         });
       }
-      const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5));
-      const values = data.map(entry => entry.waterstofproductie);
-      createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', labels, values, '#00BCD4');
+      const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5)); // verwijderd dag en houd alleen de tijd (00:00)
+      createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', labels, data.map(entry => entry.waterstofproductie), '#00BCD4');
       createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', labels, data.map(entry => entry.co2_concentratie_binnen), data.map(entry => entry.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A'));
       createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', labels, data.map(entry => entry.waterstofverbruik_auto), data.map(entry => entry.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A'));
 
@@ -162,22 +159,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!window.location.pathname.includes('car.php')) {
         // Check of we meerdere datapunten hebben
         if (Array.isArray(data)) {
-            const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5));
-          const spanningsData = data.map(entry => entry.zonnepaneelspanning);
-          const stroomData = data.map(entry => entry.zonnepaneelstroom);
-          const verbruikData = data.map(entry => entry.stroomverbruik_woning);
-      
           // Toon lijn-grafieken
-          createLineChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', labels, spanningsData, '#2196F3');
-          createLineChart('zonnepaneelStroomChart', 'Zonnepaneelstroom (A)', labels, stroomData, '#4CAF50');
-          createLineChart('stroomverbruikWoningChart', 'Stroomverbruik woning (kW)', labels, verbruikData, '#FFC107');
+          createLineChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', labels, data.map(entry => entry.zonnepaneelspanning), '#2196F3');
+          createLineChart('zonnepaneelStroomChart', 'Zonnepaneelstroom (A)', labels, data.map(entry => entry.zonnepaneelstroom), '#4CAF50');
+          createLineChart('stroomverbruikWoningChart', 'Stroomverbruik woning (kW)', labels, data.map(entry => entry.stroomverbruik_woning), '#FFC107');
           createLineChart('luchtdrukChart', 'Luchtdruk (hPa)', labels, data.map(entry => entry.luchtdruk), '#9C27B0');
           createLineChart('luchtvochtigheidChart', 'Luchtvochtigheid (%)', labels, data.map(entry => entry.luchtvochtigheid), '#03A9F4');
           createLineChart('buitentemperatuurChart', 'Buitentemperatuur (°C)', labels, data.map(entry => entry.buitentemperatuur), '#FF9800');
         }
       }
       
-
     // Index.php charts
     if (!window.location.pathname.includes('car.php')) {
       // Accu Gauge Chart
