@@ -75,36 +75,43 @@
       <!-- Grafieken voor home -->
       <section class="home-panel">
         <div class="chart-container">
+          <h3 style="color: white;">Zonnepaneelspanning (V)</h3>
           <div class="canvas-wrapper">
             <canvas id="zonnepaneelSpanningChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">Zonnepaneelstroom (A)</h3>
           <div class="canvas-wrapper">
             <canvas id="zonnepaneelStroomChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">Waterstofproductie (L/u)</h3>
           <div class="canvas-wrapper">
             <canvas id="waterstofProductieChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">Stroomverbruik woning (kW)</h3>
           <div class="canvas-wrapper">
             <canvas id="stroomverbruikWoningChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">Luchtdruk (hPa)</h3>
           <div class="canvas-wrapper">
             <canvas id="luchtdrukChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">luchtvochtigheid (%)</h3>
           <div class="canvas-wrapper">
             <canvas id="luchtvochtigheidChart"></canvas>
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">CO2-concentratie (ppm)</h3>
           <div class="canvas-wrapper">
             <canvas id="co2Chart"></canvas>
           </div>
