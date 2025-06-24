@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-// Database connection
+// Database verbinding
 $host = 'localhost';
 $user = 'root';
 $pass = '';
@@ -13,9 +13,9 @@ if ($conn->connect_error) {
     exit;
 }
 
-// Updated SQL query to include waterstofopslag_auto and waterstofverbruik_auto
+// Laatste 5 metingen ophalen
 $sql = "SELECT 
-    date, time,
+    CONCAT(date, ' ', time) AS datetime,
     zonnepaneelspanning,
     zonnepaneelstroom,
     waterstofproductie,
@@ -29,20 +29,24 @@ $sql = "SELECT
     waterstofverbruik_auto
 FROM energy_data
 ORDER BY date DESC, time DESC
-LIMIT 1";
+LIMIT 5";
 
 $result = $conn->query($sql);
 $data = [];
 
 if ($result->num_rows > 0) {
-    $data = $result->fetch_assoc();
-    foreach ($data as $key => $value) {
-        $data[$key] = is_numeric($value) ? (float)$value : $value;
+    while ($row = $result->fetch_assoc()) {
+        // Zorg dat alles numeriek is als het kan
+        foreach ($row as $key => $value) {
+            $row[$key] = is_numeric($value) ? (float)$value : $value;
+        }
+        $data[] = $row;
     }
+    // Draai om zodat oudste meting eerst is
+    $data = array_reverse($data);
 } else {
     $data = ['error' => 'No data found'];
 }
 
 $conn->close();
 echo json_encode($data, JSON_PRETTY_PRINT);
-?>
