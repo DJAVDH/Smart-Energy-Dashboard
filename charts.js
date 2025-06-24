@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
         });
       }
-      const labels = data.map(entry => entry.datetime); // of entry.date + ' ' + entry.time
+      const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5));
       const values = data.map(entry => entry.waterstofproductie);
       createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', labels, values, '#00BCD4');
       createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', labels, data.map(entry => entry.co2_concentratie_binnen), data.map(entry => entry.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A'));
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!window.location.pathname.includes('car.php')) {
         // Check of we meerdere datapunten hebben
         if (Array.isArray(data)) {
-          const labels = data.map(entry => entry.datetime);
+            const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5));
           const spanningsData = data.map(entry => entry.zonnepaneelspanning);
           const stroomData = data.map(entry => entry.zonnepaneelstroom);
           const verbruikData = data.map(entry => entry.stroomverbruik_woning);
