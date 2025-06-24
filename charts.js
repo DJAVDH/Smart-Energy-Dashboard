@@ -1,198 +1,207 @@
-// document haalt data van get_home_data.php, logt de data in de consoles en maakt grafieken op basis van de data
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('get_home_data.php');
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
 
-document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data is geladen
-  const response = await fetch('get_home_data.php'); // wacht op response van de server
-  const data = await response.json(); 
-
-  // laat data zien in console voor duidelijkheid
-    console.log(`Tijd: ${data.date} ${data.time}`);
-    console.log(`Accuniveau: ${data.accuniveau}%`);
-    console.log(`Zonnepaneelspanning: ${data.zonnepaneelspanning} V`);
-    console.log(`Zonnepaneelstroom: ${data.zonnepaneelstroom} A`);
-    console.log(`Waterstofproductie: ${data.waterstofproductie} L/u`);
-    console.log(`Stroomverbruik woning: ${data.stroomverbruik_woning} kW`);
-    console.log(`Luchtdruk: ${data.luchtdruk} hPa`);
-    console.log(`Luchtvochtigheid: ${data.luchtvochtigheid}%`);
-    console.log(`CO2 binnen: ${data.co2_concentratie_binnen} ppm`);
-    console.log(`Waterstofopslag woning: ${data.waterstofopslag_woning}%`);
-    console.log(`Buitentemperatuur: ${data.buitentemperatuur}°C`);
-    console.log(`Waterstofverbruik_auto: ${data.waterstofverbruik_auto}%`);
-    console.log(`Waterstofopslag_auto: ${data.waterstofopslag_auto}%`);
-
-
-// als data een error heeft, log de error
-  if (data.error) {
-      console.error("Fout:", data.error);
+    // Log data for debugging
+    console.log('Fetched data:', data);
+    if (data.error) {
+      console.error('Error:', data.error);
       return;
-  }
+    }
 
-  // ----- GRAFIEKEN -----
-  // gauge grafiek voor accuniveau
-  new Chart(document.getElementById('accuGaugeChart'), {
-      type: 'doughnut',
-      data: {
-          labels: ['Huidig niveau', 'Leeg'],
-          datasets: [{
-              data: [data.accuniveau, 100 - data.accuniveau],
-              backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
-              borderWidth: 0
-          }]
-      },
-      options: { // options voor de grafiek
-          responsive: true, // responsive zodat het meebeweegt met schermgrootte
-          maintainAspectRatio: false, // canvas past zich aan aan schermhoogte/breedte
-          cutout: '60%', // hoeveel ruimte zit tussen de donut
-          rotation: -90, // welke kant de donut begint
-          circumference: 180, // hoe groot de donut, 360 is een hele cirkel
-          plugins: { // plugins van chartjs voor de grafiek
-              legend: { display: false }, 
-              title: {
-                  display: true,
-                  text: 'Accuniveau',
-                  font: { size: 20 },
-                  color: '#ffffff'
-              }
-          }
+    // Helper function to create chart only if canvas exists
+    const createChartIfExists = (id, config) => {
+      const canvas = document.getElementById(id);
+      if (canvas) {
+        new Chart(canvas, config);
+      } else {
+        console.warn(`Canvas with ID '${id}' not found. Skipping chart creation.`);
       }
-  });
+    };
 
-  // logica lijn/ bargrafieken: Id, label, waarde, kleur
-  // Zonnepaneelspanning (lijngrafiek)
-  createSingleValueChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', data.zonnepaneelspanning, '#2196F3');
-
-  // Zonnepaneelstroom (lijngrafiek)
-  createSingleValueChart('zonnepaneelStroomChart', 'Zonnepaneelstroom (A)', data.zonnepaneelstroom, '#4CAF50');
-
-  // Waterstofproductie (bar grafiek)
-  createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', data.waterstofproductie, '#00BCD4');
-
-  // Stroomverbruik woning (lijngrafiek)
-  createSingleValueChart('stroomverbruikWoningChart', 'Stroomverbruik woning (kW)', data.stroomverbruik_woning, '#FFC107');
-
-  // Luchtdruk (lijngrafiek)
-  createSingleValueChart('luchtdrukChart', 'Luchtdruk (hPa)', data.luchtdruk, '#9C27B0');
-
-  // Luchtvochtigheid (lijngrafiek)
-  createSingleValueChart('luchtvochtigheidChart', 'Luchtvochtigheid (%)', data.luchtvochtigheid, '#03A9F4');
-
-  // CO2-concentratie binnen (bargrafiek)
-  createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', data.co2_concentratie_binnen, data.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A');
-
-    // Buitentemperatuur (lijngrafiek)
-    createSingleValueChart('buitentemperatuurChart', 'Buitentemperatuur (°C)', data.buitentemperatuur, '#FF9800');
-
-    // Waterstofverbruik auto (bar grafiek)
-    createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', data.waterstofverbruik_auto, data.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A');
-
-    // Waterstofopslag auto (gauge grafiek)
-    new Chart(document.getElementById('waterstofopslagAutoChart'), {
-        type: 'doughnut',
+    // Helper function for single-value line charts
+    const createSingleValueChart = (id, label, value, color) => {
+      if (typeof value === 'undefined') {
+        console.warn(`${label} data missing`);
+        return;
+      }
+      createChartIfExists(id, {
+        type: 'line',
         data: {
-            labels: ['H₂ opgeslagen', 'Leeg'],
-            datasets: [{
-                data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
-                backgroundColor: ['#009688', '#E0E0E0'],
-                borderWidth: 0
-            }]
+          labels: ['Nu'],
+          datasets: [{
+            label: label,
+            data: [value],
+            borderColor: color,
+            borderWidth: 2,
+            fill: false,
+            tension: 0.3
+          }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    };
+
+    // Helper function for bar charts
+    const createBarChart = (id, label, value, color) => {
+      if (typeof value === 'undefined') {
+        console.warn(`${label} data missing`);
+        return;
+      }
+      createChartIfExists(id, {
+        type: 'bar',
+        data: {
+          labels: [label],
+          datasets: [{
+            label: label,
+            data: [value],
+            backgroundColor: color
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    };
+
+    // Accu Gauge Chart (used in car.php and possibly index.php)
+    if (typeof data.accuniveau !== 'undefined') {
+      createChartIfExists('accuGaugeChart', {
+        type: 'doughnut',
+        data: {
+          labels: ['Huidig niveau', 'Leeg'],
+          datasets: [{
+            data: [data.accuniveau, 100 - data.accuniveau],
+            backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          rotation: -90,
+          circumference: 180,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'Accuniveau',
+              font: { size: 20 },
+              color: '#ffffff'
+            }
+          }
+        }
+      });
+    } else {
+      console.warn('accuniveau data missing');
+    }
+
+    // Waterstofopslag Auto Chart (used in car.php)
+    if (typeof data.waterstofopslag_auto !== 'undefined') {
+      createChartIfExists('waterstofopslagAutoChart', {
+        type: 'doughnut',
+        data: {
+          labels: ['H₂ opgeslagen', 'Leeg'],
+          datasets: [{
+            data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
+            backgroundColor: ['#009688', '#E0E0E0'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          rotation: -90,
+          circumference: 180,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'Waterstofopslag auto',
+              font: { size: 20 },
+              color: '#ffffff'
+            }
+          }
+        }
+      });
+    } else {
+      console.warn('waterstofopslag_auto data missing');
+    }
+
+    // Charts for index.php (skip in car.php)
+    if (!window.location.pathname.includes('car.php')) {
+      // Zonnepaneelspanning Chart
+      createSingleValueChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', data.zonnepaneelspanning, '#2196F3');
+
+      // Zonnepaneelstroom Chart
+      createSingleValueChart('zonnepaneelStroomChart', 'Zonnepaneelstroom (A)', data.zonnepaneelstroom, '#4CAF50');
+
+      // Waterstofproductie Chart
+      createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', data.waterstofproductie, '#00BCD4');
+
+      // Stroomverbruik Woning Chart
+      createSingleValueChart('stroomverbruikWoningChart', 'Stroomverbruik woning (kW)', data.stroomverbruik_woning, '#FFC107');
+
+      // Luchtdruk Chart
+      createSingleValueChart('luchtdrukChart', 'Luchtdruk (hPa)', data.luchtdruk, '#9C27B0');
+
+      // Luchtvochtigheid Chart
+      createSingleValueChart('luchtvochtigheidChart', 'Luchtvochtigheid (%)', data.luchtvochtigheid, '#03A9F4');
+
+      // CO2-concentratie Binnen Chart
+      createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', data.co2_concentratie_binnen, data.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A');
+
+      // Buitentemperatuur Chart
+      createSingleValueChart('buitentemperatuurChart', 'Buitentemperatuur (°C)', data.buitentemperatuur, '#FF9800');
+
+      // Waterstofverbruik Auto Chart
+      createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', data.waterstofverbruik_auto, data.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A');
+
+      // Waterstofopslag Woning Chart
+      if (typeof data.waterstofopslag_woning !== 'undefined') {
+        createChartIfExists('waterstofopslagChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['H₂ opgeslagen', 'Leeg'],
+            datasets: [{
+              data: [data.waterstofopslag_woning, 100 - data.waterstofopslag_woning],
+              backgroundColor: ['#009688', '#E0E0E0'],
+              borderWidth: 0
+            }]
+          },
+          options: {
             responsive: true,
             maintainAspectRatio: false,
             cutout: '60%',
             rotation: -90,
             circumference: 180,
             plugins: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'Waterstofopslag auto',
-                    font: { size: 20 },
-                    color: '#ffffff'
-                }
-            }
-        }
-    });
-    
-
-    
-
-  // gauge grafiek voor waterstofopslag
-  new Chart(document.getElementById('waterstofopslagChart'), {
-      type: 'doughnut',
-      data: {
-          labels: ['H₂ opgeslagen', 'Leeg'],
-          datasets: [{
-              data: [data.waterstofopslag_woning, 100 - data.waterstofopslag_woning],
-              backgroundColor: ['#009688', '#E0E0E0'],
-              borderWidth: 0
-          }]
-      },
-      options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '60%', // hoeveel ruimte tussen de donut
-          rotation: -90, // welke kant de donut begint
-          circumference: 180, // hoe groot de donut, 360 is een hele cirkel
-          plugins: {
               legend: { display: false },
               title: {
-                  display: true,
-                  text: 'Waterstofopslag woning',
-                  font: { size: 20 },
-                  color: '#ffffff'
+                display: true,
+                text: 'Waterstofopslag woning',
+                font: { size: 20 },
+                color: '#ffffff'
               }
+            }
           }
+        });
+      } else {
+        console.warn('waterstofopslag_woning data missing');
       }
-  });
-
-  // ------ Functies voor lijn-grafieken --------
-  function createSingleValueChart(id, label, value, color) {
-      new Chart(document.getElementById(id), {
-          type: 'line', // type is lijngrafiek
-          data: {
-              labels: ['Nu'], // allen de nu waarde voor nu. moet nog veranderd worden..
-              datasets: [{
-                  label: label, //beschrijving
-                  data: [value], // de waarde
-                  borderColor: color, //kleur van de lijn
-                  borderWidth: 2, // dikte van de lijn
-                  fill: false, // niet onder de lijn vullen
-                  tension: 0.3 // hoe smooth de lijn is
-              }]
-          },
-          options: { // 
-              responsive: true, // canvas past zich aan aan schermhoogte/breedte
-              maintainAspectRatio: false, 
-              plugins: {
-                  legend: { display: false },
-                    
-              },
-              scales: {
-                  y: { beginAtZero: true }
-              }
-          }
-      });
-  }
-
-    // ------ Functie voor bar-grafieken --------
-  function createBarChart(id, label, value, color) {
-      new Chart(document.getElementById(id), {
-          type: 'bar',
-          data: {
-              labels: [label], // de label voor de x-as
-              datasets: [{ // label, data en achtergrondkleur
-                  label: label,
-                  data: [value],
-                  backgroundColor: color
-              }]
-          },
-          options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                  y: { beginAtZero: true }
-              }
-          }
-      });
+    }
+  } catch (error) {
+    console.error('Error fetching or processing data:', error);
   }
 });
