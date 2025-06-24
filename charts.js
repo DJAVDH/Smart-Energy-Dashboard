@@ -38,14 +38,14 @@ document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data
               borderWidth: 0
           }]
       },
-      options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '60%',
-          rotation: -90,
-          circumference: 180,
-          plugins: {
-              legend: { display: false },
+      options: { // options voor de grafiek
+          responsive: true, // responsive zodat het meebeweegt met schermgrootte
+          maintainAspectRatio: false, // canvas past zich aan aan schermhoogte/breedte
+          cutout: '60%', // hoeveel ruimte zit tussen de donut
+          rotation: -90, // welke kant de donut begint
+          circumference: 180, // hoe groot de donut, 360 is een hele cirkel
+          plugins: { // plugins van chartjs voor de grafiek
+              legend: { display: false }, 
               title: {
                   display: true,
                   text: 'Accuniveau',
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => { // wacht tot de data
       }
   });
 
+  // logica lijn/ bargrafieken: Id, label, waarde, kleur
   // Zonnepaneelspanning (lijngrafiek)
   createSingleValueChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', data.zonnepaneelspanning, '#2196F3');
 
