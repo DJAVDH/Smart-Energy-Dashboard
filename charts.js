@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const createChartIfExists = (id, config) => {
       const canvas = document.getElementById(id);
       if (canvas) {
+        console.log(`Creating chart for ${id}`);
         new Chart(canvas, config);
       } else {
         console.warn(`Canvas with ID '${id}' not found. Skipping chart creation.`);
@@ -73,74 +74,117 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     };
 
-    // Accu Gauge Chart (used in car.php and possibly index.php)
-    if (typeof data.accuniveau !== 'undefined') {
-      createChartIfExists('accuGaugeChart', {
-        type: 'doughnut',
-        data: {
-          labels: ['Huidig niveau', 'Leeg'],
-          datasets: [{
-            data: [data.accuniveau, 100 - data.accuniveau],
-            backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '60%',
-          rotation: -90,
-          circumference: 180,
-          plugins: {
-            legend: { display: false },
-            title: {
-              display: true,
-              text: 'Accuniveau',
-              font: { size: 20 },
-              color: '#ffffff'
+    // Car charts (accuGaugeChart, waterstofopslagAutoChart, waterstofVerbruikAutoChart)
+    if (window.location.pathname.includes('car.php')) {
+      // Accu Gauge Chart
+      if (typeof data.accuniveau !== 'undefined') {
+        createChartIfExists('accuGaugeChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['Huidig niveau', 'Leeg'],
+            datasets: [{
+              data: [data.accuniveau, 100 - data.accuniveau],
+              backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Accuniveau',
+                font: { size: 20 },
+                color: '#ffffff'
+              }
             }
           }
-        }
-      });
-    } else {
-      console.warn('accuniveau data missing');
-    }
+        });
+      } else {
+        console.warn('accuniveau data missing');
+      }
 
-    // Waterstofopslag Auto Chart (used in car.php)
-    if (typeof data.waterstofopslag_auto !== 'undefined') {
-      createChartIfExists('waterstofopslagAutoChart', {
-        type: 'doughnut',
-        data: {
-          labels: ['H₂ opgeslagen', 'Leeg'],
-          datasets: [{
-            data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
-            backgroundColor: ['#009688', '#E0E0E0'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '60%',
-          rotation: -90,
-          circumference: 180,
-          plugins: {
-            legend: { display: false },
-            title: {
-              display: true,
-              text: 'Waterstofopslag auto',
-              font: { size: 20 },
-              color: '#ffffff'
+      // Waterstofopslag Auto Chart
+      if (typeof data.waterstofopslag_auto !== 'undefined') {
+        createChartIfExists('waterstofopslagAutoChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['H₂ opgeslagen', 'Leeg'],
+            datasets: [{
+              data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
+              backgroundColor: ['#009688', '#E0E0E0'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Waterstofopslag auto',
+                font: { size: 20 },
+                color: '#ffffff'
+              }
             }
           }
-        }
-      });
-    } else {
-      console.warn('waterstofopslag_auto data missing');
+        });
+      } else {
+        console.warn('waterstofopslag_auto data missing');
+      }
+
+      // Waterstofverbruik Auto Chart
+      if (typeof data.waterstofverbruik_auto !== 'undefined') {
+        createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', data.waterstofverbruik_auto, data.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A');
+      } else {
+        console.warn('waterstofverbruik_auto data missing');
+      }
     }
 
-    // Charts for index.php (skip in car.php)
+    // Index.php charts
     if (!window.location.pathname.includes('car.php')) {
+      // Accu Gauge Chart
+      if (typeof data.accuniveau !== 'undefined') {
+        createChartIfExists('accuGaugeChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['Huidig niveau', 'Leeg'],
+            datasets: [{
+              data: [data.accuniveau, 100 - data.accuniveau],
+              backgroundColor: [data.accuniveau > 20 ? '#4CAF50' : '#FF6347', '#E0E0E0'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Accuniveau',
+                font: { size: 20 },
+                color: '#ffffff'
+              }
+            }
+          }
+        });
+      } else {
+        console.warn('accuniveau data missing');
+      }
+
       // Zonnepaneelspanning Chart
       createSingleValueChart('zonnepaneelSpanningChart', 'Zonnepaneelspanning (V)', data.zonnepaneelspanning, '#2196F3');
 
@@ -167,6 +211,39 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Waterstofverbruik Auto Chart
       createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', data.waterstofverbruik_auto, data.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A');
+
+      // Waterstofopslag Auto Chart
+      if (typeof data.waterstofopslag_auto !== 'undefined') {
+        createChartIfExists('waterstofopslagAutoChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['H₂ opgeslagen', 'Leeg'],
+            datasets: [{
+              data: [data.waterstofopslag_auto, 100 - data.waterstofopslag_auto],
+              backgroundColor: ['#009688', '#E0E0E0'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Waterstofopslag auto',
+                font: { size: 20 },
+                color: '#ffffff'
+              }
+            }
+          }
+        });
+      } else {
+        console.warn('waterstofopslag_auto data missing');
+      }
 
       // Waterstofopslag Woning Chart
       if (typeof data.waterstofopslag_woning !== 'undefined') {
