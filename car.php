@@ -87,6 +87,7 @@
           </div>
         </div>
         <div class="chart-container">
+          <h3 style="color: white;">Waterstofverbruik auto</h3>
           <div class="canvas-wrapper">
             <canvas id="waterstofVerbruikAutoChart"></canvas>
           </div>
