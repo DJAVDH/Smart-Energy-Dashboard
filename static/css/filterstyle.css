@@ -1,47 +1,170 @@
-/* Filter sectie styling */
-.filter-section {
-  margin-top: 40px;
-  background: rgba(39, 47, 87, 0.85);
-  border-radius: 30px;
-  padding: 40px 50px 30px 50px;
-  max-width: 500px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+/* Algemene body en achtergrond */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #0F092D, #10031D);
+}
+
+/* Hoofdcontainer voor layout */
+.layout-container {
+  display: flex;
+  align-items: flex-start;
+  height: 155vh;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Zijbalk navigatie */
+.sidebar-nav {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 290px;
+  background-color: #272F57;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+/* Logo sectie in de zijbalk */
+.sidebar-logo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  justify-content: center;
+  font-family: Poppins, sans-serif;
+}
+
+.sidebar-logo {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+/* Navigatielinks in de zijbalk */
+.sidebar-links {
   display: flex;
   flex-direction: column;
+}
+
+.sidebar-links a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+  font-size: 20px;
+  font-family: Roboto, sans-serif;
+}
+
+.sidebar-links a:hover {
+  opacity: 0.8;
+}
+
+.sidebar-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+
+/* Hoofdcontent rechts van de zijbalk */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 0;
+  height: 100%;
+}
+
+/* Rij met dashboard titel en iconen */
+.dashboard-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 50px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+/* Dashboard titel */
+.dashboard-title-label {
+  position: relative;
+  margin-left: 0;
+  margin-top: 0;
+  color: white;
+  font-size: 2.2em;
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  flex-shrink: 1;
+  max-width: calc(100vw - 350px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
   align-items: center;
 }
 
-.filter-section h1 {
-  font-family: Poppins, sans-serif;
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 30px;
-  color: #fff;
-  letter-spacing: 1px;
-}
-
-.filter-form {
+/* Iconen rechts van de dashboard titel */
+.dashboard-header-icons {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+  gap: 70px;
+  margin-right: 100px;
+  margin-left: 30px;
 }
 
-.form-group {
+.dashboard-header-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+
+
+
+/* filter */
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.filter-bar .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
 }
 
-.form-group label {
-  font-family: Roboto, sans-serif;
+.filter-bar label {
+  font-family: 'Roboto', Arial, sans-serif;
   font-size: 1rem;
   color: #fff;
   margin-bottom: 2px;
 }
 
-.form-group input[type="date"] {
+.filter-bar input[type="date"] {
   padding: 8px 12px;
   border-radius: 8px;
   border: none;
@@ -52,26 +175,26 @@
   transition: background 0.2s;
 }
 
-.form-group input[type="date"]:focus {
+.filter-bar input[type="date"]:focus {
   background: #2e3760;
 }
 
-.apply-button {
-  margin-top: 10px;
-  padding: 12px 0;
-  width: 100%;
+.filter-bar .apply-button {
+  margin-top: 18px;
+  padding: 12px 24px;
   background: #ffb300;
   color: #181c2f;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  align-self: flex-end;
 }
 
-.apply-button:hover {
+.filter-bar .apply-button:hover {
   background: #ffd54f;
   color: #181c2f;
 }

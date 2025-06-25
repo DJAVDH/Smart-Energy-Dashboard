@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Energy Dashboard</title>
-  <link rel="stylesheet" href="static/css/style.css" />
   <link rel="stylesheet" href="static/css/filterstyle.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,25 +55,25 @@
         </span>
       </div>
 
-      <!-- Filter sectie -->
-      <div class="filter-section">
-        <h1>Filter by date</h1>
-        <form class="filter-form">
-          <div class="form-group">
-            <label for="start-date">From:</label>
-            <input type="date" id="start-date" name="start-date">
-          </div>
-          <div class="form-group">
-            <label for="end-date">To:</label>
-            <input type="date" id="end-date" name="end-date">
-          </div>
-          <button type="submit" class="apply-button">
-            Apply Filter
-          </button>
-        </form>
-      </div>
-    </div>
+<!-- Filterbalk bovenaan -->
+<form class="filter-bar">
+  <div class="form-group">
+    <label for="start-date">From:</label>
+    <input type="date" id="start-date" name="start-date">
   </div>
+  <div class="form-group">
+    <label for="end-date">To:</label>
+    <input type="date" id="end-date" name="end-date">
+  </div>
+  <button type="submit" class="apply-button">
+    Apply Filter
+  </button>
+</form>
+
+<!-- Hier komt straks je info-sectie -->
+<div class="filter-info">
+  <!-- Info komt hier -->
+</div>
 
 </body>
 </html>
