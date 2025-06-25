@@ -46,7 +46,7 @@
       <!-- Titelbalk met dashboard titel en knoppen -->
       <div class="dashboard-header-row">
         <span class="dashboard-title-label">
-          Energy dashboard
+          Energy Dashboard
         </span>
         <span class="dashboard-header-icons">
           <a href="login.php">

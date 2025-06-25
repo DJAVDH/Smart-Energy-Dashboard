@@ -40,7 +40,7 @@
 
     <!-- Main panel -->
     <div class="main-panel">
-      <!-- Header met dashboard titel en iconen -->
+      <!-- Header dashboard titel and icons -->
       <div class="dashboard-header-row">
         <span class="dashboard-title-label">
           Energy Dashboard
@@ -55,7 +55,7 @@
         </span>
       </div>
 
-<!-- Filterbalk bovenaan -->
+<!-- Filter -->
 <form class="filter-bar">
   <div class="form-group">
     <label for="start-date">From:</label>
@@ -70,9 +70,8 @@
   </button>
 </form>
 
-<!-- Hier komt straks je info-sectie -->
+
 <div class="filter-info">
-  <!-- Info komt hier -->
 </div>
 
 </body>
