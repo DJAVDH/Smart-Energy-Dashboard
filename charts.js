@@ -248,6 +248,7 @@ export async function loadMonthlyData() {
     createLineChart('luchtdrukChart', 'Gem. luchtdruk (hPa)', labels, monthlyData.map(e => e.luchtdruk), '#9C27B0');
     createLineChart('luchtvochtigheidChart', 'Gem. luchtvochtigheid (%)', labels, monthlyData.map(e => e.luchtvochtigheid), '#03A9F4');
     createBarChart('co2Chart', 'Gem. CO₂ binnen (ppm)', labels, monthlyData.map(e => e.co2_concentratie_binnen), '#8BC34A');
+    createBarChart('waterstofVerbruikAutoChart', 'Gem. waterstofverbruik auto (%)', labels, monthlyData.map(e => e.waterstofverbruik_auto), '#F44336');
   } catch (error) {
     console.error('Error fetching monthly data:', error);
   }
