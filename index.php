@@ -74,6 +74,7 @@
       </div>
       <!-- Grafieken voor home -->
       <section class="home-panel">
+        <h4 id="year-msg" style="display: none; color:red;">Niet genoeg gegevens voor een jaaroverzicht.</h4>
         <div class="chart-container">
           <h3 style="color: white;">Zonnepaneelspanning (V)</h3>
           <div class="canvas-wrapper">

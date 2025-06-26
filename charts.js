@@ -82,6 +82,12 @@ const createChartIfExists = (id, config) => {
 };
   
 export async function loadHomeData() {
+  const chartContainers = document.querySelectorAll('.chart-container');
+  chartContainers.forEach(container => {
+    container.style.display = 'block';
+    document.getElementById('year-msg').style.display = 'none';
+
+  });
   try {
     const response = await fetch('get_home_data.php');
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -230,6 +236,12 @@ export async function loadHomeData() {
 }
 
 export async function loadMonthlyData() {
+  const chartContainers = document.querySelectorAll('.chart-container');
+  chartContainers.forEach(container => {
+    container.style.display = 'block';
+    document.getElementById('year-msg').style.display = 'none';
+
+  });
   try {
     const response = await fetch('get_month_data.php');
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -256,4 +268,25 @@ export async function loadMonthlyData() {
   } catch (error) {
     console.error('Error fetching monthly data:', error);
   }
+}
+
+export async function loadYearData() {
+  // 1. Verwijder alle bestaande charts
+  for (let id in charts) {
+    if (charts[id]) {
+      charts[id].destroy();
+      delete charts[id];
+      console.log(`Chart met ID '${id}' vernietigd.`);
+    }
+  }
+
+  // 2. Verberg alle grafiekcontainers
+  const chartContainers = document.querySelectorAll('.chart-container');
+  chartContainers.forEach(container => {
+    container.style.display = 'none';
+  });
+
+  // 3. Toon een melding dat er geen jaargegevens zijn
+  // alert("Niet genoeg gegevens voor een jaaroverzicht.");
+  document.getElementById('year-msg').style.display = 'block';
 }

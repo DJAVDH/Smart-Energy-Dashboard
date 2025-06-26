@@ -1,4 +1,4 @@
-import { loadMonthlyData, loadHomeData } from "../charts.js";
+import { loadMonthlyData, loadHomeData, loadYearData} from "../charts.js";
 
 // Zet de actieve periodeknop
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedPeriod = this.getAttribute('data-period');
         if (selectedPeriod === 'month') {
           loadMonthlyData();
-        } else {
+        } else if (selectedPeriod === 'day') {
           loadHomeData();
+        } else {
+          loadYearData();
         }
       });
     });
