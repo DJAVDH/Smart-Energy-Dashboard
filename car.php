@@ -75,7 +75,8 @@
       </div>
 
       <!-- Grafieken voor home -->
-      <section class="home-panel">
+      <section class="home-panel">\
+        <h4 id="year-msg" style="display: none; color:red;">Niet genoeg gegevens voor een jaaroverzicht.</h4>
         <div class="chart-container">
           <div class="canvas-wrapper">
             <canvas id="accuGaugeChart"></canvas>
