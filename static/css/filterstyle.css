@@ -135,11 +135,7 @@ body, html {
   display: inline-block;
 }
 
-
-
-
-/* filter */
-
+/* Filter */
 .filter-bar {
   display: flex;
   align-items: center;
@@ -197,4 +193,44 @@ body, html {
 .filter-bar .apply-button:hover {
   background: #ffd54f;
   color: #181c2f;
+}
+
+/* Charts container */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Individual chart card with blue container styling */
+.chart-card {
+  width: 100%; /* Stretch to fill available space */
+  max-width: 300px; /* Match other pages' container width */
+  height: 250px; /* Match other pages' container height */
+  background-color: #272F57; /* Blue background */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  display: none; /* Hidden by default */
+}
+
+/* Show chart card when it contains a chart */
+.chart-card.active {
+  display: flex;
+}
+
+/* Ensure canvas fills the chart-card properly */
+.chart-card canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
 }
