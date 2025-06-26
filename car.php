@@ -63,9 +63,9 @@
       <div class="period-info-row">
         <!-- Periodebalk met knoppen -->
         <div class="period-selector-bar">
-          <button class="period-btn period-btn-today active">Today</button>
-          <button class="period-btn period-btn-month">Month</button>
-          <button class="period-btn period-btn-year">Year</button>
+          <button class="period-btn period-btn-today active" data-period="day">Today</button>
+          <button class="period-btn period-btn-month" data-period="month">Month</button>
+          <button class="period-btn period-btn-year" data-period="year">Year</button>
         </div>
         <!-- Overzicht en datum -->
         <div class="overview-info">
@@ -96,8 +96,8 @@
 
 
 
-      <script src="js/toggle.js"></script>
-      <script src="charts.js"></script>
+      <script type="module" src="js/toggle.js"></script>
+      <script type="module" src="charts.js"></script>
 </body>
 
 </html>

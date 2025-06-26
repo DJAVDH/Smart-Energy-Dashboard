@@ -1,4 +1,87 @@
-document.addEventListener('DOMContentLoaded', async () => {
+const charts = {} // object om alle charts in op te slaan
+
+// functie voor lijn-grafieken
+function createLineChart(id, label, labels, dataPoints, color) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return; // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
+
+  if (charts[id]) { // als er al een chart met dit id bestaat, word deze eerst verwijderd
+    charts[id].destroy();
+  }
+
+  charts[id] = new Chart(canvas, { // charts.js functies
+    type: 'line',
+    data: {
+      labels: labels, // tijdstempels
+      datasets: [{
+        label: label,
+        data: dataPoints,
+        borderColor: color,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+// functie voor bar grafiek
+function createBarChart(id, label, labels, dataPoints, color) {
+const canvas = document.getElementById(id);
+if (!canvas) return; // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
+
+  if (charts[id]) { // als er al een chart met dit id bestaat, word deze eerst verwijderd
+    charts[id].destroy();
+  }
+
+  charts[id] = new Chart(canvas, { // charts.js functies
+  type: 'bar',
+  data: {
+    labels: labels, // tijdstempels
+    datasets: [{
+      label: label,
+      data: dataPoints,
+      backgroundColor: color
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+}
+
+// const voor het maken van de grafieken
+const createChartIfExists = (id, config) => {
+  const canvas = document.getElementById(id);
+
+  // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
+  if (!canvas){
+    console.warn(`Canvas met ID '${id}' niet gevonden. Chart wordt niet gemaakt.`);
+    return;
+  }
+
+  // als er al een chart met dit id bestaat, word deze eerst verwijderd en daarna de nieuwe chart gemaakt
+  if(charts[id]){
+    charts[id].destroy();
+    console.log('Verwijderde bestaande chart:', id);
+  }
+
+  // maak de nieuwe chart met de gegeven config
+  charts[id] = new Chart(canvas, config);
+  console.log('Gemaakte chart:', id);
+};
+  
+export async function loadHomeData() {
   try {
     const response = await fetch('get_home_data.php');
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -19,70 +102,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("luchtvochtigheid:", data.map(entry => entry.luchtvochtigheid));
     console.log("datetime:", data.map(entry => entry.datetime));
 
-    // const voor het maken van de grafieken
-    const createChartIfExists = (id, config) => {
-      const canvas = document.getElementById(id);
-      if (canvas) {
-        console.log(`Creating chart for ${id}`);
-        new Chart(canvas, config);
-      } else {
-        console.warn(`Canvas with ID '${id}' not found. Skipping chart creation.`);
-      }
-    };
-
     const latestData = data[data.length - 1]; // alleen data voor gauges, dit pakt maar 1 data ipv 5
-
-    // functie voor lijngrafiek
-    function createLineChart(id, label, labels, dataPoints, color) {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
-      
-        new Chart(canvas, {
-          type: 'line',
-          data: {
-            labels: labels, // tijdstempels
-            datasets: [{
-              label: label,
-              data: dataPoints,
-              borderColor: color,
-              fill: true,
-              tension: 0.3
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: { beginAtZero: true }
-            }
-          }
-        });
-      }
-
-    // functie voor bar grafiek
-    function createBarChart(id, label, labels, dataPoints, color) {
-      const canvas = document.getElementById(id);
-      if (!canvas) return;
-      
-      new Chart(canvas, {
-        type: 'bar',
-        data: {
-          labels: labels, // tijdstempels
-          datasets: [{
-            label: label,
-            data: dataPoints,
-            backgroundColor: color
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-    }
+    
     const labels = data.map(entry => entry.datetime.split(' ')[1].slice(0, 5)); // verwijderd dag en houd alleen de tijd (00:00)
     createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', labels, data.map(entry => entry.waterstofproductie), '#00BCD4');
     createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', labels, data.map(entry => entry.co2_concentratie_binnen), data.map(entry => entry.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A'));
@@ -204,4 +225,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error('Error fetching or processing data:', error);
   }
-});
+}
+
+export async function loadMonthlyData() {
+  try {
+    const response = await fetch('get_month_data.php');
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const monthlyData = await response.json();
+
+    if (!Array.isArray(monthlyData) || monthlyData.length === 0) {
+      console.warn('No monthly data available');
+      return;
+    }
+
+    // labels voor de maandelijkse grafieken ()
+    const labels = monthlyData.map(entry => entry.date);
+
+    createLineChart('zonnepaneelSpanningChart', 'Gem. zonnepaneelspanning (V)', labels, monthlyData.map(e => e.zonnepaneelspanning), '#3F51B5');
+    createLineChart('zonnepaneelStroomChart', 'Gem. zonnepaneelstroom (A)', labels, monthlyData.map(e => e.zonnepaneelstroom), '#4CAF50');
+    createBarChart('waterstofProductieChart', 'Gem. waterstofproductie (L/u)', labels, monthlyData.map(e => e.waterstofproductie), '#00BCD4');
+    createLineChart('stroomverbruikWoningChart', 'Gem. stroomverbruik woning (kW)', labels, monthlyData.map(e => e.stroomverbruik_woning), '#FF9800');
+    createLineChart('luchtdrukChart', 'Gem. luchtdruk (hPa)', labels, monthlyData.map(e => e.luchtdruk), '#9C27B0');
+    createLineChart('luchtvochtigheidChart', 'Gem. luchtvochtigheid (%)', labels, monthlyData.map(e => e.luchtvochtigheid), '#03A9F4');
+    createBarChart('co2Chart', 'Gem. CO₂ binnen (ppm)', labels, monthlyData.map(e => e.co2_concentratie_binnen), '#8BC34A');
+  } catch (error) {
+    console.error('Error fetching monthly data:', error);
+  }
+}
