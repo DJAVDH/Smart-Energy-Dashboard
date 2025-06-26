@@ -1,7 +1,7 @@
 const charts = {} // object om alle charts in op te slaan
 
 // functie voor lijn-grafieken
-function createLineChart(id, label, labels, dataPoints, color) {
+export function createLineChart(id, label, labels, dataPoints, color) {
   const canvas = document.getElementById(id);
   if (!canvas) return; // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
 
@@ -32,32 +32,32 @@ function createLineChart(id, label, labels, dataPoints, color) {
 }
 
 // functie voor bar grafiek
-function createBarChart(id, label, labels, dataPoints, color) {
-const canvas = document.getElementById(id);
-if (!canvas) return; // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
+export function createBarChart(id, label, labels, dataPoints, color) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return; // als er geen canvas met id is, word dat gelogt en wordt de chart niet gemaakt
 
   if (charts[id]) { // als er al een chart met dit id bestaat, word deze eerst verwijderd
     charts[id].destroy();
   }
 
   charts[id] = new Chart(canvas, { // charts.js functies
-  type: 'bar',
-  data: {
-    labels: labels, // tijdstempels
-    datasets: [{
-      label: label,
-      data: dataPoints,
-      backgroundColor: color
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: { beginAtZero: true }
+    type: 'bar',
+    data: {
+      labels: labels, // tijdstempels
+      datasets: [{
+        label: label,
+        data: dataPoints,
+        backgroundColor: color
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
     }
-  }
-});
+  });
 }
 
 // const voor het maken van de grafieken
@@ -180,7 +180,7 @@ export async function loadHomeData() {
       }
     }
 
-    if (!window.location.pathname.includes('car.php')) { // Alleen voor index.phpx. als window.location.pathname niet car.php bevat: voer dit uit
+    if (!window.location.pathname.includes('car.php')) { // Alleen voor index.php. als window.location.pathname niet car.php bevat: voer dit uit
         // Check of we meerdere datapunten hebben
       if (Array.isArray(data)) {
           // Toon lijn-grafieken
@@ -240,7 +240,7 @@ export async function loadMonthlyData() {
       return;
     }
 
-    // labels voor de maandelijkse grafieken ()
+    // labels voor de maandelijkse grafieken
     const labels = monthlyData.map(entry => entry.date);
 
     createLineChart('zonnepaneelSpanningChart', 'Gem. zonnepaneelspanning (V)', labels, monthlyData.map(e => e.zonnepaneelspanning), '#3F51B5');

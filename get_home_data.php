@@ -31,7 +31,7 @@ $sql = "SELECT
     buitentemperatuur
 FROM energy_data
 ORDER BY date DESC, time DESC
-LIMIT 5";
+LIMIT 6";
 
 $result = $conn->query($sql);
 $data = [];
