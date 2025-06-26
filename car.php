@@ -92,6 +92,11 @@
             <canvas id="waterstofVerbruikAutoChart"></canvas>
           </div>
         </div>
+        <div class="chart-container">
+          <div class="canvas-wrapper">
+            <canvas id="buitentemperatuurChart"></canvas>
+          </div>
+        </div>
       </section>
 
 

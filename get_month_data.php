@@ -22,8 +22,10 @@ $sql = "SELECT
     AVG(stroomverbruik_woning) AS stroomverbruik_woning,
     AVG(luchtdruk) AS luchtdruk,
     AVG(luchtvochtigheid) AS luchtvochtigheid,
-    AVG(co2_concentratie_binnen) AS co2_concentratie_binnen
-    
+    AVG(co2_concentratie_binnen) AS co2_concentratie_binnen,
+    AVG(binnentemperatuur) AS binnentemperatuur,
+    AVG(buitentemperatuur) AS buitentemperatuur
+
 FROM energy_data
 WHERE date >=CURDATE() - INTERVAL 30 DAY
 GROUP BY date

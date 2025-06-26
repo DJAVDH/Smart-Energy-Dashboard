@@ -121,6 +121,11 @@
             <canvas id="waterstofopslagChart"></canvas>
           </div>
         </div>
+        <div class="chart-container">
+          <div class="canvas-wrapper">
+            <canvas id="binnentemperatuurChart"></canvas>
+          </div>
+        </div>
       </section>
     </div>
   </div>

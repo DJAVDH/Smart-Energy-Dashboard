@@ -26,7 +26,9 @@ $sql = "SELECT
     co2_concentratie_binnen,
     waterstofopslag_woning,
     waterstofopslag_auto,
-    waterstofverbruik_auto
+    waterstofverbruik_auto,
+    binnentemperatuur,
+    buitentemperatuur
 FROM energy_data
 ORDER BY date DESC, time DESC
 LIMIT 5";

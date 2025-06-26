@@ -108,6 +108,8 @@ export async function loadHomeData() {
     createBarChart('waterstofProductieChart', 'Waterstofproductie (L/u)', labels, data.map(entry => entry.waterstofproductie), '#00BCD4');
     createBarChart('co2Chart', 'CO2-concentratie binnen (ppm)', labels, data.map(entry => entry.co2_concentratie_binnen), data.map(entry => entry.co2_concentratie_binnen > 1000 ? '#F44336' : '#8BC34A'));
     createBarChart('waterstofVerbruikAutoChart', 'Waterstofverbruik auto (%)', labels, data.map(entry => entry.waterstofverbruik_auto), data.map(entry => entry.waterstofverbruik_auto > 50 ? '#F44336' : '#8BC34A'));
+    createBarChart('binnentemperatuurChart', 'Binnentemperatuur (°C)', labels, data.map(entry => entry.binnentemperatuur), '#FF9800');
+    createBarChart('buitentemperatuurChart', 'Buitentemperatuur (°C)', labels, data.map(entry => entry.buitentemperatuur), '#FF9800');
 
     // Car charts (accuGaugeChart, waterstofopslagAutoChart)
     if (window.location.pathname.includes('car.php')) {
@@ -249,6 +251,8 @@ export async function loadMonthlyData() {
     createLineChart('luchtvochtigheidChart', 'Gem. luchtvochtigheid (%)', labels, monthlyData.map(e => e.luchtvochtigheid), '#03A9F4');
     createBarChart('co2Chart', 'Gem. CO₂ binnen (ppm)', labels, monthlyData.map(e => e.co2_concentratie_binnen), '#8BC34A');
     createBarChart('waterstofVerbruikAutoChart', 'Gem. waterstofverbruik auto (%)', labels, monthlyData.map(e => e.waterstofverbruik_auto), '#F44336');
+    createBarChart('binnentemperatuurChart', 'Gem. binnentemperatuur (°C)', labels, monthlyData.map(e => e.binnentemperatuur), '#FF9800');
+    createBarChart('buitentemperatuurChart', 'Gem. buitentemperatuur (°C)', labels, monthlyData.map(e => e.buitentemperatuur), '#FF9800');
   } catch (error) {
     console.error('Error fetching monthly data:', error);
   }
